@@ -152,13 +152,13 @@ export function AddLeadModal({ isOpen, onClose }: AddLeadModalProps) {
           <Button
             variant="outline"
             onClick={onClose}
-            className="h-10 px-6 text-sm font-medium text-gray-700 bg-white border border-gray-200 rounded-lg hover:bg-gray-50"
+            className="h-10 px-6 text-sm font-medium  bg-white border border-gray-300 rounded-lg hover:bg-gray-50"
           >
             Cancel
           </Button>
           <Button
             onClick={handleSubmit}
-            className="h-10 px-6 text-sm font-medium text-white rounded-lg focus:ring-1"
+            className="h-10 px-6 text-sm font-medium text-white bg-orange-500 rounded-lg focus:ring-1"
           >
             Add Lead
           </Button>

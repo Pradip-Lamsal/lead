@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { Eye, Pencil } from 'lucide-react';
 import { Lead } from '@/types/lead';
 import { useLeadStore } from '@/store/useLeadStore';
-import { Table, Tag } from 'antd';
+import { Table, Tag, Button, Space } from 'antd';
+import { EyeOutlined, EditOutlined } from '@ant-design/icons';
 import type { ColumnsType } from 'antd/es/table';
 
 // Status badge component with appropriate colors
@@ -10,21 +10,34 @@ const StatusBadge = ({ status }: { status: Lead['leadStatus'] }) => {
   const getStatusColor = (status: Lead['leadStatus']) => {
     switch (status) {
       case 'Converted':
-        return 'success';
+        return { color: '#ffffff', bgColor: '#22c55e' }; // green-500
       case 'Warm':
-        return 'warning';
+        return { color: '#ffffff', bgColor: '#eab308' }; // yellow-500
       case 'Cold':
-        return 'processing';
+        return { color: '#ffffff', bgColor: '#3b82f6' }; // blue-500
       case 'Lost':
-        return 'error';
+        return { color: '#ffffff', bgColor: '#ef4444' }; // red-500
       case 'Initiated':
-        return 'default';
+        return { color: '#ffffff', bgColor: '#8b5cf6' }; // purple-500
       default:
-        return 'default';
+        return { color: '#ffffff', bgColor: '#6b7280' }; // gray-500
     }
   };
 
-  return <Tag color={getStatusColor(status)}>{status}</Tag>;
+  const colors = getStatusColor(status);
+  return (
+    <Tag 
+      style={{ 
+        backgroundColor: colors.bgColor,
+        color: colors.color,
+        borderRadius: '9999px',
+        padding: '4px 12px',
+        border: 'none'
+      }}
+    >
+      {status}
+    </Tag>
+  );
 };
 
 // Source badge component
@@ -32,15 +45,28 @@ const SourceBadge = ({ source }: { source: Lead['leadSource'] }) => {
   const getSourceColor = (source: Lead['leadSource']) => {
     switch (source) {
       case 'Online':
-        return 'blue';
+        return { color: '#4f46e5', bgColor: '#e0e7ff' }; // indigo-100 and indigo-600
       case 'Walk-in':
-        return 'purple';
+        return { color: '#db2777', bgColor: '#fce7f3' }; // pink-100 and pink-600
       default:
-        return 'default';
+        return { color: '#4b5563', bgColor: '#f3f4f6' }; // gray-100 and gray-600
     }
   };
 
-  return <Tag color={getSourceColor(source)}>{source}</Tag>;
+  const colors = getSourceColor(source);
+  return (
+    <Tag 
+      style={{ 
+        backgroundColor: colors.bgColor,
+        color: colors.color,
+        borderRadius: '9999px',
+        padding: '4px 12px',
+        border: 'none'
+      }}
+    >
+      {source}
+    </Tag>
+  );
 };
 
 export function LeadsTable() {
@@ -90,7 +116,7 @@ export function LeadsTable() {
       render: (source: Lead['leadSource']) => <SourceBadge source={source} />,
     },
     {
-      title: 'Status',
+      title: 'Lead Status',
       dataIndex: 'leadStatus',
       key: 'leadStatus',
       width: 80,
@@ -102,14 +128,18 @@ export function LeadsTable() {
       width: 80,
       align: 'right',
       render: () => (
-        <div className="flex justify-end gap-2">
-          <button className="p-2 text-slate-400 hover:text-slate-600">
-            <Eye className="h-4 w-4" />
-          </button>
-          <button className="p-2 text-slate-400 hover:text-slate-600">
-            <Pencil className="h-4 w-4" />
-          </button>
-        </div>
+        <Space className='flex justify-end gap-0'>
+          <Button 
+            type="text" 
+            icon={<EyeOutlined />} 
+            className="text-slate-400 hover:text-slate-600"
+          />
+          <Button 
+            type="text" 
+            icon={<EditOutlined />} 
+            className="text-slate-400 hover:text-slate-600"
+          />
+        </Space>
       ),
     },
   ];
