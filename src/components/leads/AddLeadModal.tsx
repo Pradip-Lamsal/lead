@@ -1,10 +1,4 @@
 import { useState, ChangeEvent } from 'react';
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -15,6 +9,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+import { AnimatedModal } from "@/components/ui/AnimatedModal";
 
 interface AddLeadModalProps {
   isOpen: boolean;
@@ -54,15 +49,21 @@ export function AddLeadModal({ isOpen, onClose }: AddLeadModalProps) {
   };
 
   return (
-    <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-[900px] max-h-[800px] p-1 overflow-hidden bg-white rounded-full">
-        <DialogHeader className="px-4 py-3 border-b border-gray-100">
+    <AnimatedModal isOpen={isOpen} buttonSelector="motion.button.bg-orange-500, button.bg-orange-500">
+      <div className="bg-white rounded-xl overflow-hidden w-full max-w-[900px] h-[80vh]">
+        <div className="px-4 py-3 border-b border-gray-100">
           <div className="flex justify-between items-center">
-            <DialogTitle className="text-xl font-semibold text-gray-900">Add a New Lead</DialogTitle>
+            <h2 className="text-xl font-semibold text-gray-900">Add a New Lead</h2>
+            <button 
+              onClick={onClose}
+              className="text-gray-400 hover:text-gray-500"
+            >
+              ✕
+            </button>
           </div>
-        </DialogHeader>
+        </div>
 
-        <div className="px-4 py-5">
+        <div className="px-4 py-5 max-h-[calc(80vh-120px)] overflow-y-auto">
           <div className="space-y-4">
             <h3 className="text-base font-medium text-gray-900">Lead Details</h3>
             
@@ -91,7 +92,7 @@ export function AddLeadModal({ isOpen, onClose }: AddLeadModalProps) {
                   value={formData.source}
                   onValueChange={(value: string) => handleInputChange('source', value)}
                 >
-                  <SelectTrigger className="border-0 border-b border-gray-200 rounded-none focus:ring-0 focus:border-b-2transition-all">
+                  <SelectTrigger className="border-0 border-b border-gray-200 rounded-none focus:ring-0 focus:border-b-2 transition-all">
                     <SelectValue placeholder="Select lead source" />
                   </SelectTrigger>
                   <SelectContent className="bg-white border border-gray-200 shadow-lg">
@@ -152,7 +153,7 @@ export function AddLeadModal({ isOpen, onClose }: AddLeadModalProps) {
           <Button
             variant="outline"
             onClick={onClose}
-            className="h-10 px-6 text-sm font-medium  bg-white border border-gray-300 rounded-lg hover:bg-gray-50"
+            className="h-10 px-6 text-sm font-medium text-orange-500 bg-white border border-gray-200 rounded-lg hover:bg-gray-50"
           >
             Cancel
           </Button>
@@ -163,7 +164,7 @@ export function AddLeadModal({ isOpen, onClose }: AddLeadModalProps) {
             Add Lead
           </Button>
         </div>
-      </DialogContent>
-    </Dialog>
+      </div>
+    </AnimatedModal>
   );
 } 
